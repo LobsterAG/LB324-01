@@ -51,3 +51,4 @@ jobs:
           replacement-method: defined
           env-replacement-list: |
             GITHUB_SHA=${{ github.sha }}
+            
