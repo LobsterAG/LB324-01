@@ -1,7 +1,24 @@
 (async () => {
   const myUser = await generateRandomUser();
   let activeUsers = [];
-  let typingUsers = [];
+
+  function getCurrentMessage() {
+    const messages = document.querySelectorAll('.message');
+    if (messages.length > 0) {
+      return messages[messages.length - 1];
+    }
+    return null;
+  }
+
+  function updateActiveUsers() {
+    const activeUsersContainer = document.getElementById('activeUsersContainer');
+    activeUsersContainer.innerHTML = '';
+    activeUsers.forEach((user) => {
+      const userElement = document.createElement('p');
+      userElement.textContent = user.name;
+      activeUsersContainer.appendChild(userElement);
+    });
+  }
 
   const socket = new WebSocket(generateBackendUrl());
   socket.addEventListener('open', () => {
@@ -18,13 +35,28 @@
         setTimeout(() => {
           messageElement.classList.add('opacity-100');
         }, 100);
+        setTimeout(() => {
+          const currentMessage = getCurrentMessage();
+          if (currentMessage && currentMessage.type === 'typing') {
+            return;
+          }
+          removeTyping();
+        }, 100);
         break;
       case 'activeUsers':
         activeUsers = message.users;
+        updateActiveUsers();
         break;
       case 'typing':
-        typingUsers = message.users;
-        break;
+        let typingElement = document.getElementById('typing');
+        if (!typingElement) {
+          typingElement = generateTyping(message, myUser);
+          document.getElementById('messages').appendChild(typingElement);
+          setTimeout(() => {
+            typingElement.classList.add('opacity-100');
+          }, 100);
+        }
+        typingElement.querySelector('p').innerHTML = `${message.users.map(u => u.name).join(', ')} is typing...`;        break;
       default:
         break;
     }
@@ -59,3 +91,14 @@
     }
   });
 })();
+
+//Dark Mode
+document.body.classList.add("light-mode");
+document.querySelector(".bg-white").classList.add("light-mode");
+
+function myFunction() {
+  var element = document.body;
+  element.classList.toggle("dark-mode");
+  var whiteBackground = document.querySelector(".bg-white");
+  whiteBackground.classList.toggle("dark-mode");
+}
