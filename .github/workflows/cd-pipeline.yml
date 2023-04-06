@@ -9,7 +9,7 @@ env:
   IMAGE_TAG: darkdesignx/project-324:${{ github.sha }}
 jobs:
   Build-Push-Deploy-Application:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
       - name: Check out repository code
         uses: actions/checkout@v3
