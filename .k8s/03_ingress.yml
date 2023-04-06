@@ -12,10 +12,10 @@ metadata:
 spec:
   tls:
     - hosts:
-        - m324-webserver.m324.hackerman.ch
-      secretName: m324-webserver.m324.hackerman.ch-tls
+        - lobster-chat-m324.m324.hackerman.ch
+      secretName: lobster-chat-m324.m324.hackerman.ch-tls
   rules:
-    - host: m324-webserver.m324.hackerman.ch
+    - host: lobster-chat-m324.m324.hackerman.ch
       http:
         paths:
           - path: /
