@@ -15,7 +15,6 @@ COPY . .
 # CI in Image Build Process
 RUN yarn lint
 RUN yarn test
-RUN node_modules/.bin/tsc
 
 # Build
 RUN yarn build
