@@ -1,7 +1,7 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: m324-simple-webserver
+  name: lobster-chat-m324
   namespace: m324-team5
   annotations:
     cert-manager.io/cluster-issuer: "letsencrypt-prod"
@@ -22,6 +22,6 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: m324-simple-webserver
+                name: lobster-chat-m324
                 port:
                   number: 80

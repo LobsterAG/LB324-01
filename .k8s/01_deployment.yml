@@ -1,23 +1,23 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: m324-simple-webserver
+  name: lobster-chat-m324
   namespace: m324-team5
   labels:
-    app: m324-simple-webserver
+    app: lobster-chat-m324
 spec:
   replicas: 1
   revisionHistoryLimit: 2
   selector:
     matchLabels:
-      app: m324-simple-webserver
+      app: lobster-chat-m324
   template:
     metadata:
       labels:
-        app: m324-simple-webserver
+        app: lobster-chat-m324
     spec:
       containers:
-        - name: m324-simple-webserver
+        - name: lobster-chat-m324
           image: ${IMAGE_TAG}
           command:
             - /bin/sh
