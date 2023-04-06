@@ -1,24 +1,23 @@
-FROM node:18-slim
+FROM node:18-alpine
 
 # Create app directory
 WORKDIR /app
 
+# Copy app source
+COPY . .
+
 # Install app dependencies
-COPY package*.json ./
 RUN yarn install
 RUN yarn add jest
 RUN yarn add eslint
 
-# Copy app source
-COPY . .
-
 # CI in Image Build Process
-RUN yarn lint
-RUN yarn test
+RUN yarn jest
+RUN node_modules/.bin/tsc
+RUN yarn build
+RUN yarn eslint
 
 # Build
 RUN yarn build
 
-EXPOSE 3000
-
-CMD [ "yarn", "start" ]
+ENTRYPOINT ["node", "./build/index.js"]
